@@ -1,3 +1,5 @@
+require 'auto_network'
+
 require 'ipaddress'
 
 module AutoNetwork
@@ -8,9 +10,11 @@ class Pool
     @myself ||= new
   end
 
-  def initialize(range = '10.20.1.0/24')
+  def initialize(range = AutoNetwork.default_pool)
     @network  = IPAddress.parse(range)
     @iterator = @network.hosts.each
+
+    # Assume that the first valid host address is used by the host address.
     @iterator.next
   end
 
