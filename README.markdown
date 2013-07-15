@@ -54,8 +54,8 @@ To change this, add the following _before_ the Vagrant configuration block:
 Contact
 -------
 
-  * Source code: https://github.com/adrienthebo/vagrant-auto\_network
-  * Issue tracker: https://github.com/adrienthebo/vagrant-auto\_network/issues
+  * [Source code](https://github.com/adrienthebo/vagrant-auto_network)
+  * [Issue tracker](https://github.com/adrienthebo/vagrant-auto_network/issues)
 
 If you have questions or concerns about this module, contact finch on Freenode,
 or email adrien@puppetlabs.com.
