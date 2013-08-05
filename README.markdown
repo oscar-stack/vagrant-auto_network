@@ -26,14 +26,13 @@ Usage
         node.vm.box = "centos-5-i386"
 
         node.vm.extend AutoNetwork::Mixin
-        node.vm.auto_network!
+        node.vm.network :private_network, :auto_network => true
       end
 
       config.vm.define 'second' do |node|
         node.vm.box = "centos-5-i386"
 
-        node.vm.extend AutoNetwork::Mixin
-        node.vm.auto_network!
+        node.vm.network :private_network, :auto_network => true
       end
     end
 
