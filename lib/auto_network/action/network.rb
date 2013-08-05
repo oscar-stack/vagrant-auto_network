@@ -10,6 +10,7 @@ class AutoNetwork::Action::Network
     @env = env
 
     @machine_config = @env[:machine].config.vm
+    @pool = @env[:auto_network_pool]
 
     auto_networks.each do |net|
       mk_private_network(net)
@@ -39,13 +40,9 @@ class AutoNetwork::Action::Network
   #
   # @return [void]
   def mk_private_network(iface)
-    addr = pool.next
+    addr = @pool.next
 
     iface[1].delete(:auto_network)
     iface[1][:ip] = addr
-  end
-
-  def pool
-    AutoNetwork::Pool.instance
   end
 end

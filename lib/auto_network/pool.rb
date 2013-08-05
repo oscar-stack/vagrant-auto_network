@@ -7,13 +7,6 @@ module AutoNetwork
 
     class PoolExhaustedError < Vagrant::Errors::VagrantError; end
 
-    # Provide a single instance of this class
-    #
-    # @return [AutoNetwork::Pool]
-    def self.instance
-      @myself ||= new
-    end
-
     # @param addr [String] The network address range to use as the address pool.
     #   Defaults to `AutoNetwork.default_pool`
     def initialize(addr = AutoNetwork.default_pool)
