@@ -13,10 +13,10 @@ module AutoNetwork
     %w[up reload].each do |action_type|
       action = "machine_action_#{action_type}".to_sym
       action_hook(:auto_network, action) do |hook|
-        hook.before(
-          VagrantPlugins::ProviderVirtualBox::Action::Network,
-          AutoNetwork::Action::PersistentIP
-        )
+        before     = VagrantPlugins::ProviderVirtualBox::Action::Network
+        middleware = AutoNetwork::Action::Network
+
+        hook.before(before, middleware)
       end
     end
   end

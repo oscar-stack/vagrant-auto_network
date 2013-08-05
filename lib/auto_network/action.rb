@@ -1,5 +1,5 @@
 module AutoNetwork
   module Action
-    require 'auto_network/action/persistent_ip'
+    require 'auto_network/action/network'
   end
 end
