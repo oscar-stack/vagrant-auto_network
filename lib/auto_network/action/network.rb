@@ -31,6 +31,10 @@ class AutoNetwork::Action::Network
 
   # Convert an auto network to a private network with a static IP address.
   #
+  # This does an in-place modification of the private_network options hash
+  # to strip out the auto_network configuration and make this behave like a
+  # normal private network interface with a static IP address.
+  #
   # @param iface [Array<Symbol, Hash>]
   #
   # @return [void]
