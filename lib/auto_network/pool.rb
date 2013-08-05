@@ -5,7 +5,7 @@ require 'ipaddress'
 module AutoNetwork
   class Pool
 
-    class PoolExhaustedError < StandardError; end
+    class PoolExhaustedError < Vagrant::Errors::VagrantError; end
 
     # Provide a single instance of this class
     #
