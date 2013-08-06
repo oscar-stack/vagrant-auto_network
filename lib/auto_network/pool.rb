@@ -1,5 +1,3 @@
-require 'auto_network'
-
 require 'ipaddr'
 
 module AutoNetwork
@@ -8,11 +6,15 @@ module AutoNetwork
     class PoolExhaustedError < Vagrant::Errors::VagrantError; end
 
     # @param network_addr [String] The network address range to use as the
-    #   address pool. Defaults to `AutoNetwork.default_pool`
-    def initialize(network_addr = AutoNetwork.default_pool)
+    #   address pool.
+    def initialize(network_addr)
       generate_pool(network_addr)
     end
 
+    # Retrieve an IP address for the given machine. If a machine already has
+    # an IP address requested, then return that.
+    #
+    # @param machine [Vagrant::Machine]
     def request(machine)
       if (address = address_for_machine(machine))
         return address
