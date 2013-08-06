@@ -1,7 +1,12 @@
+require 'auto_network'
+
 class AutoNetwork::Action::GenPool
 
   def initialize(app, env)
     @app, @env = app, env
+
+    @config_path = @env[:home_path].join('auto_network')
+    @statefile   = @config_path.join('pool.yaml')
   end
 
   def call(env)
@@ -16,11 +21,10 @@ class AutoNetwork::Action::GenPool
 
   def deserialize!
     pool = nil
-    if statefile.exist?
-      yaml = statefile.read
-      pool = YAML.load(statefile.read)
+    if @statefile.exist?
+      pool = YAML.load(@statefile.read)
     else
-      pool = AutoNetwork::Pool.new
+      pool = AutoNetwork::Pool.new(AutoNetwork.default_pool)
     end
     @env[:auto_network_pool] = pool
   end
@@ -28,12 +32,10 @@ class AutoNetwork::Action::GenPool
   def serialize!
     data = YAML.dump(@env[:auto_network_pool])
 
-    statefile.open('w') do |fh|
+    @config_path.mkpath unless @config_path.exist?
+
+    @statefile.open('w') do |fh|
       fh.write(data)
     end
-  end
-
-  def statefile
-    @statefile ||= @env[:home_path].join('auto_network.yaml')
   end
 end
