@@ -3,12 +3,15 @@ require 'ipaddr'
 module AutoNetwork
   class Pool
 
-    class PoolExhaustedError < Vagrant::Errors::VagrantError; end
+    class PoolExhaustedError < Vagrant::Errors::VagrantError
+      error_key(:pool_exhausted, 'vagrant_auto_network')
+    end
 
     # @param network_addr [String] The network address range to use as the
     #   address pool.
-    def initialize(network_addr)
-      generate_pool(network_addr)
+    def initialize(network_range)
+      @network_range = network_range
+      generate_pool
     end
 
     # Retrieve an IP address for the given machine. If a machine already has
@@ -22,7 +25,7 @@ module AutoNetwork
         @pool[address] = machine.id
         return address
       else
-        raise PoolExhaustedError
+        raise PoolExhaustedError, :network => @network_range
       end
     end
 
@@ -44,11 +47,12 @@ module AutoNetwork
       next_addr
     end
 
-    def generate_pool(str)
-      network = IPAddr.new(str)
+    def generate_pool
+      network = IPAddr.new(@network_range)
       addresses = network.to_range.to_a
 
       addresses.delete_at(-1) # Strip out the broadcast address
+      addresses.delete_at(1)  # And the first address (should be used by the host)
       addresses.delete_at(0)  # And the network address
 
       @pool = {}

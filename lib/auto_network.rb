@@ -8,3 +8,5 @@ module AutoNetwork
   require 'auto_network/plugin'
   require 'auto_network/version'
 end
+
+I18n.load_path << File.expand_path('../templates/locales/en.yml', File.dirname(__FILE__))
