@@ -1,13 +1,10 @@
-require 'auto_network/mixin'
-
 module AutoNetwork
-  class << self
-    def default_pool
-      @default_pool ||= '10.20.1.0/24'
-    end
 
-    def default_pool=(pool)
-      @default_pool = pool
-    end
-  end
+  require 'auto_network/default_pool'
+  extend DefaultPool
+
+  require 'auto_network/action'
+  require 'auto_network/mixin'
+  require 'auto_network/plugin'
+  require 'auto_network/version'
 end
