@@ -5,9 +5,8 @@ module AutoNetwork
   # internal network.
   module Mixin
     def auto_network!
-      pool = AutoNetwork::Pool.instance
-      addr = pool.next
-      network :private_network, :ip => addr
+      puts "AutoNetwork::Mixin is deprecated, use config.vm.network :private_network, :auto_network => true"
+      network :private_network, :auto_network => true
     end
   end
 end
