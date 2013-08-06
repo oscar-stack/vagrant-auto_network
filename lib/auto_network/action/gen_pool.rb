@@ -1,4 +1,5 @@
 require 'auto_network'
+require 'yaml'
 
 class AutoNetwork::Action::GenPool
 

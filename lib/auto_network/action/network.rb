@@ -9,6 +9,14 @@ class AutoNetwork::Action::Network
   def call(env)
     @env = env
 
+    filter_networks if env_has_machine?
+
+    @app.call(@env)
+  end
+
+  private
+
+  def filter_networks
     @machine = @env[:machine]
     @machine_config = @machine.config.vm
 
@@ -17,11 +25,11 @@ class AutoNetwork::Action::Network
     auto_networks.each do |net|
       mk_private_network(net)
     end
-
-    @app.call(@env)
   end
 
-  private
+  def env_has_machine?
+    !!(@env[:machine])
+  end
 
   # Fetch all private networks that are tagged for auto networking
   #

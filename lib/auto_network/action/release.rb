@@ -6,7 +6,13 @@ class AutoNetwork::Action::Release
 
   def call(env)
     @env = env
+    release_network_addresses if env_has_machine?
+    @app.call(@env)
+  end
 
+  private
+
+  def release_network_addresses
     @machine = @env[:machine]
     @machine_config = @machine.config.vm
 
@@ -15,11 +21,12 @@ class AutoNetwork::Action::Release
     auto_networks.each do |net|
       release_private_network(net)
     end
-
-    @app.call(@env)
   end
 
-  private
+
+  def env_has_machine?
+    !!(@env[:machine])
+  end
 
   # Fetch all private networks that are tagged for auto networking
   #
