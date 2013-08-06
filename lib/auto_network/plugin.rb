@@ -13,24 +13,25 @@ module AutoNetwork
     %w[up reload].each do |action_type|
       action = "machine_action_#{action_type}".to_sym
       action_hook(:auto_network, action) do |hook|
-        auto_middleware = AutoNetwork::Action::Network
-        env_middleware  = AutoNetwork::Action::GenPool
 
-        vbox_middleware = VagrantPlugins::ProviderVirtualBox::Action::Network
+        stack = Vagrant::Action::Builder.new
+        stack.use AutoNetwork::Action::GenPool
+        stack.use AutoNetwork::Action::Network
 
-        hook.before(vbox_middleware, env_middleware)
-        hook.before(vbox_middleware, auto_middleware)
+        vbox = VagrantPlugins::ProviderVirtualBox::Action::Network
+
+        hook.before(vbox, stack)
       end
     end
 
     action_hook(:auto_network, 'machine_action_destroy'.to_sym) do |hook|
-      vbox_middleware = VagrantPlugins::ProviderVirtualBox::Action::Destroy
+      vbox = VagrantPlugins::ProviderVirtualBox::Action::Destroy
 
-      env_middleware     = AutoNetwork::Action::GenPool
-      release_middleware = AutoNetwork::Action::Release
+      stack = Vagrant::Action::Builder.new
+      stack.use AutoNetwork::Action::GenPool
+      stack.use AutoNetwork::Action::Release
 
-      hook.before(vbox_middleware, env_middleware)
-      hook.before(vbox_middleware, release_middleware)
+      hook.before(vbox, stack)
     end
   end
 end
