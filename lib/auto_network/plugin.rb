@@ -22,5 +22,15 @@ module AutoNetwork
         hook.before(vbox_middleware, auto_middleware)
       end
     end
+
+    action_hook(:auto_network, 'machine_action_destroy'.to_sym) do |hook|
+      vbox_middleware = VagrantPlugins::ProviderVirtualBox::Action::Destroy
+
+      env_middleware     = AutoNetwork::Action::GenPool
+      release_middleware = AutoNetwork::Action::Release
+
+      hook.before(vbox_middleware, env_middleware)
+      hook.before(vbox_middleware, release_middleware)
+    end
   end
 end

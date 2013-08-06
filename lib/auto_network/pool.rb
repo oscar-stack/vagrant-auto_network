@@ -31,8 +31,13 @@ module AutoNetwork
       end
     end
 
+    # Release an IP address associated with a machine
+    #
+    # @param machine [Vagrant::Machine]
     def release(machine)
-      raise NotImplementedError
+      if (address = address_for_machine(machine))
+        @pool[address] = nil
+      end
     end
 
     private
