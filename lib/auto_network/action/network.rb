@@ -27,7 +27,7 @@ class AutoNetwork::Action::Network
   #
   # @param iface [Array<Symbol, Hash>]
   def auto_networks
-    @interfaces = @machine_config.networks.select do |(net_type, options)|
+    @machine_config.networks.select do |(net_type, options)|
       net_type == :private_network and options[:auto_network]
     end
   end
