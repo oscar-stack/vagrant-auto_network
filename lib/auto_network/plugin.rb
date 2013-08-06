@@ -22,5 +22,10 @@ module AutoNetwork
         hook.before(vbox_middleware, auto_middleware)
       end
     end
+
+    command(:'auto-network') do
+      require_relative 'command'
+      AutoNetwork::Command
+    end
   end
 end
