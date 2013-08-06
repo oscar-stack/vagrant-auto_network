@@ -1,6 +1,6 @@
 require 'auto_network/pool'
 
-class AutoNetwork::Action::Network
+class AutoNetwork::Action::FilterNetworks
 
   def initialize(app, env)
     @app, @env = app, env
