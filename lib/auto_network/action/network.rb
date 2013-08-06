@@ -9,7 +9,9 @@ class AutoNetwork::Action::Network
   def call(env)
     @env = env
 
-    @machine_config = @env[:machine].config.vm
+    @machine = @env[:machine]
+    @machine_config = @machine.config.vm
+
     @pool = @env[:auto_network_pool]
 
     auto_networks.each do |net|
@@ -40,7 +42,9 @@ class AutoNetwork::Action::Network
   #
   # @return [void]
   def mk_private_network(iface)
-    addr = @pool.next
+    addr = @pool.request(@machine)
+
+    @env[:ui].info "Automatically assigning IP address #{addr.inspect}", :prefix => true
 
     iface[1].delete(:auto_network)
     iface[1][:ip] = addr
