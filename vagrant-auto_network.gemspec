@@ -13,8 +13,6 @@ Gem::Specification.new do |gem|
 
   gem.summary     = "Automatically create an internal network for all vagrant boxes"
 
-  gem.add_dependency 'ipaddress'
-
   gem.files        = %x{git ls-files -z}.split("\0")
   gem.require_path = 'lib'
 end
