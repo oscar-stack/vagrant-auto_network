@@ -46,8 +46,8 @@ module AutoNetwork
       network = IPAddr.new(str)
       addresses = network.to_range.to_a
 
-      addresses.delete_at(-1)
-      addresses.delete_at(0)
+      addresses.delete_at(-1) # Strip out the broadcast address
+      addresses.delete_at(0)  # And the network address
 
       @pool = {}
 
