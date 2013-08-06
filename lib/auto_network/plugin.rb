@@ -10,28 +10,21 @@ module AutoNetwork
     networks.
     DESC
 
-    %w[up reload].each do |action_type|
-      action = "machine_action_#{action_type}".to_sym
-      action_hook(:auto_network, action) do |hook|
-
-        stack = Vagrant::Action::Builder.new
-        stack.use AutoNetwork::Action::GenPool
-        stack.use AutoNetwork::Action::Network
-
-        vbox = VagrantPlugins::ProviderVirtualBox::Action::Network
-
-        hook.before(vbox, stack)
-      end
-    end
-
-    action_hook(:auto_network, 'machine_action_destroy'.to_sym) do |hook|
-      vbox = VagrantPlugins::ProviderVirtualBox::Action::Destroy
-
+    action_hook('Auto network: load address pool') do |hook|
       stack = Vagrant::Action::Builder.new
       stack.use AutoNetwork::Action::GenPool
-      stack.use AutoNetwork::Action::Release
+      stack.use AutoNetwork::Action::Network
+      hook.prepend stack
+    end
 
-      hook.before(vbox, stack)
+    action_hook('Auto network: filter private networks') do |hook|
+      action = AutoNetwork::Action::GenPool
+      hook.after(action, AutoNetwork::Action::Network)
+    end
+
+    action_hook('Auto network: release address', 'machine_action_destroy'.to_sym) do |hook|
+      action = AutoNetwork::Action::Network
+      hook.after(action, AutoNetwork::Action::Release)
     end
   end
 end
