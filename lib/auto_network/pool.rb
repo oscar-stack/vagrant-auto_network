@@ -25,7 +25,9 @@ module AutoNetwork
         @pool[address] = machine.id
         return address
       else
-        raise PoolExhaustedError, :network => @network_range
+        raise PoolExhaustedError,
+          :name    => machine.name,
+          :network => @network_range
       end
     end
 

@@ -2,7 +2,8 @@
 en:
   vagrant_auto_network:
     pool_exhausted: |-
-      All usable ip addresses in the network range '%{network}' have been used.
-      This is probably due to VMs being deleted outside of Vagrant. Check the
+      The machine '%{name}' tried to get an automatic network address, but all
+      ip addresses in the network range '%{network}' have been used. This is
+      probably due to VMs being deleted outside of Vagrant. Check the
       auto_network pool configuration file and remove the machine IDs from
       addresses that are no longer in use, or add addresses to the pool.
