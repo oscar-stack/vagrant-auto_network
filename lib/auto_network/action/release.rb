@@ -18,26 +18,13 @@ class AutoNetwork::Action::Release
 
     @pool = @env[:auto_network_pool]
 
-    auto_networks.each do |net|
-      release_private_network(net)
+    if (addr = @pool.address_for(@machine))
+      @env[:ui].info "Releasing #{addr.inspect} from #{@machine.id}", :prefix => true
+      @pool.release(@machine)
     end
   end
-
 
   def env_has_machine?
     !!(@env[:machine])
-  end
-
-  # Fetch all private networks that are tagged for auto networking
-  #
-  # @param iface [Array<Symbol, Hash>]
-  def auto_networks
-    @interfaces = @machine_config.networks.select do |(net_type, options)|
-      net_type == :private_network and options[:auto_network]
-    end
-  end
-
-  def release_private_network(_)
-    @pool.release(@machine)
   end
 end

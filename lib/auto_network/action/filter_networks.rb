@@ -1,6 +1,8 @@
-require 'auto_network/pool'
+require 'auto_network/action_helpers'
 
 class AutoNetwork::Action::FilterNetworks
+
+  include AutoNetwork::ActionHelpers
 
   def initialize(app, env)
     @app, @env = app, env
@@ -9,52 +11,36 @@ class AutoNetwork::Action::FilterNetworks
   def call(env)
     @env = env
 
-    filter_networks if env_has_machine?
+    @pool    = @env[:auto_network_pool]
+
+    global_env = @env[:env]
+
+    if global_env
+      active_machines = global_env.active_machines.map do |vm_id|
+        global_env.machine(*vm_id)
+      end
+
+      active_machines.each do |m|
+        @machine = m
+        assign_address if machine_has_address?
+      end
+      @machine = nil
+    end
 
     @app.call(@env)
   end
 
   private
 
-  def filter_networks
-    @machine = @env[:machine]
-    @machine_config = @machine.config.vm
+  def machine_has_address?
+    @machine and @pool.address_for(@machine)
+  end
 
-    @pool = @env[:auto_network_pool]
-
+  def assign_address
     auto_networks.each do |net|
-      mk_private_network(net)
+      addr = @pool.address_for(@machine)
+      @env[:ui].info "Reassigning #{addr.inspect} to #{@machine.id}", :prefix => true
+      filter_private_network(net, addr)
     end
-  end
-
-  def env_has_machine?
-    !!(@env[:machine])
-  end
-
-  # Fetch all private networks that are tagged for auto networking
-  #
-  # @param iface [Array<Symbol, Hash>]
-  def auto_networks
-    @machine_config.networks.select do |(net_type, options)|
-      net_type == :private_network and options[:auto_network]
-    end
-  end
-
-  # Convert an auto network to a private network with a static IP address.
-  #
-  # This does an in-place modification of the private_network options hash
-  # to strip out the auto_network configuration and make this behave like a
-  # normal private network interface with a static IP address.
-  #
-  # @param iface [Array<Symbol, Hash>]
-  #
-  # @return [void]
-  def mk_private_network(iface)
-    addr = @pool.request(@machine)
-
-    @env[:ui].info "Automatically assigning IP address #{addr.inspect}", :prefix => true
-
-    iface[1].delete(:auto_network)
-    iface[1][:ip] = addr
   end
 end
