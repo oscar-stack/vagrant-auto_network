@@ -10,11 +10,13 @@ module AutoNetwork
     networks.
     DESC
 
-    action_hook('Auto network: load address pool') do |hook|
-      stack = Vagrant::Action::Builder.new
-      stack.use AutoNetwork::Action::GenPool
-      stack.use AutoNetwork::Action::FilterNetworks
-      hook.prepend stack
+    action_hook('Auto network: initialize address pool') do |hook|
+      hook.prepend AutoNetwork::Action::GenPool
+    end
+
+    action_hook('Auto network: filter private networks', :environment_load) do |hook|
+      action = AutoNetwork::Action::GenPool
+      hook.after(action, AutoNetwork::Action::FilterNetworks)
     end
 
     action_hook('Auto network: request address', :machine_action_up) do |hook|
