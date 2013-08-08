@@ -10,6 +10,15 @@ class AutoNetwork::Action::LoadPool
     @statefile   = @config_path.join('pool.yaml')
   end
 
+  # Handle the loading and unloading of the auto_network pool
+  #
+  # @param env [Hash]
+  #
+  # @option env [AutoNetwork::Pool] auto_network_pool The global auto network pool
+  # @option env [Vagrant::Environment] env The Vagrant environment containing
+  #   the active machines that need to be filtered.
+  #
+  # @return [void]
   def call(env)
     @env = env
 
@@ -33,12 +42,9 @@ class AutoNetwork::Action::LoadPool
   end
 
   def serialize!
-    data = YAML.dump(@env[:auto_network_pool])
-
     @config_path.mkpath unless @config_path.exist?
 
-    @statefile.open('w') do |fh|
-      fh.write(data)
-    end
+    pool_data = YAML.dump(@env[:auto_network_pool])
+    @statefile.open('w') { |fh| fh.write(pool_data) }
   end
 end
