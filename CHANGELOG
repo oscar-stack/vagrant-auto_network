@@ -1,0 +1,12 @@
+vagrant-auto_network
+====================
+
+0.2.0
+-----
+
+2013-08-07
+
+This is a backwards compatible feature release. It reimplements the
+auto_network functionality as part of the :private_network network config
+method. It also implements persistent leases so that machines in different
+Vagrant environments all have unique addresses.
