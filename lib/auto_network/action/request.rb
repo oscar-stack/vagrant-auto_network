@@ -8,6 +8,14 @@ class AutoNetwork::Action::Request
     @app, @env = app, env
   end
 
+  # Request an auto_network IP address on VM creation
+  #
+  # @param env [Hash]
+  #
+  # @option env [AutoNetwork::Pool] auto_network_pool The global auto network pool
+  # @option env [Vagrant::Machine] machine The Vagrant machine being created
+  #
+  # @return [void]
   def call(env)
     @env = env
 

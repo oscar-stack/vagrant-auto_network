@@ -8,7 +8,6 @@ class AutoNetwork::Action::FilterNetworks
     @app, @env = app, env
   end
 
-
   # Convert auto_network interfaces to static private_network interfaces.
   #
   # @param env [Hash]
