@@ -19,7 +19,7 @@ module AutoNetwork
     #
     # @param machine [Vagrant::Machine]
     def request(machine)
-      if (address = address_for_machine(machine))
+      if (address = address_for(machine))
         return address
       elsif (address = next_available_lease)
         @pool[address] = machine.id
@@ -35,18 +35,19 @@ module AutoNetwork
     #
     # @param machine [Vagrant::Machine]
     def release(machine)
-      if (address = address_for_machine(machine))
+      if (address = address_for(machine))
         @pool[address] = nil
       end
     end
 
-    private
-
-    def address_for_machine(machine)
+    def address_for(machine)
+      return nil if machine.id.nil?
       next_addr, _ = @pool.find { |(addr, id)| machine.id == id }
 
       next_addr
     end
+
+    private
 
     def next_available_lease
       next_addr, _ = @pool.find { |(addr, id)| id.nil? }

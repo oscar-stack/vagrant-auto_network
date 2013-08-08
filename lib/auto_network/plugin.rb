@@ -10,28 +10,23 @@ module AutoNetwork
     networks.
     DESC
 
-    %w[up reload].each do |action_type|
-      action = "machine_action_#{action_type}".to_sym
-      action_hook(:auto_network, action) do |hook|
-
-        stack = Vagrant::Action::Builder.new
-        stack.use AutoNetwork::Action::GenPool
-        stack.use AutoNetwork::Action::Network
-
-        vbox = VagrantPlugins::ProviderVirtualBox::Action::Network
-
-        hook.before(vbox, stack)
-      end
+    action_hook('Auto network: initialize address pool') do |hook|
+      hook.prepend AutoNetwork::Action::LoadPool
     end
 
-    action_hook(:auto_network, 'machine_action_destroy'.to_sym) do |hook|
-      vbox = VagrantPlugins::ProviderVirtualBox::Action::Destroy
+    action_hook('Auto network: filter private networks', :environment_load) do |hook|
+      action = AutoNetwork::Action::LoadPool
+      hook.after(action, AutoNetwork::Action::FilterNetworks)
+    end
 
-      stack = Vagrant::Action::Builder.new
-      stack.use AutoNetwork::Action::GenPool
-      stack.use AutoNetwork::Action::Release
+    action_hook('Auto network: request address', :machine_action_up) do |hook|
+      action = VagrantPlugins::ProviderVirtualBox::Action::Network
+      hook.before(action, AutoNetwork::Action::Request)
+    end
 
-      hook.before(vbox, stack)
+    action_hook('Auto network: release address', :machine_action_destroy) do |hook|
+      action = VagrantPlugins::ProviderVirtualBox::Action::Destroy
+      hook.before(action, AutoNetwork::Action::Release)
     end
   end
 end
