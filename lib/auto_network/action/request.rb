@@ -14,7 +14,7 @@ class AutoNetwork::Action::Request
     @pool    = @env[:auto_network_pool]
     @machine = @env[:machine]
 
-    request_address unless machine_has_address(@machine)
+    request_address unless machine_has_address?(@machine)
 
     @app.call(@env)
   end
