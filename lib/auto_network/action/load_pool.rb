@@ -25,7 +25,9 @@ class AutoNetwork::Action::LoadPool
     if @statefile.exist?
       pool = YAML.load(@statefile.read)
     else
-      pool = AutoNetwork::Pool.new(AutoNetwork.default_pool)
+      range = AutoNetwork.default_pool
+      @env[:ui].info "No auto_network pool available, generating a pool with the range #{range}"
+      pool = AutoNetwork::Pool.new(range)
     end
     @env[:auto_network_pool] = pool
   end
