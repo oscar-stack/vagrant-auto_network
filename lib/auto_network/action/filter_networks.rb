@@ -24,14 +24,9 @@ class AutoNetwork::Action::FilterNetworks
     @pool      = @env[:auto_network_pool]
     global_env = @env[:env]
 
-
-    machines = machines_for_env(global_env)
-
-    active_machines.each do |m|
-      @machine = m
-      assign_address if machine_has_address?
+    machines_for_env(global_env).each do |machine|
+      assign_address(machine) if machine_has_address?(machine)
     end
-    @machine = nil
 
     @app.call(@env)
   end
@@ -42,14 +37,10 @@ class AutoNetwork::Action::FilterNetworks
     global_env.active_machines.map { |vm_id| global_env.machine(*vm_id) }
   end
 
-  def machine_has_address?
-    @machine and @pool.address_for(@machine)
-  end
-
-  def assign_address
-    auto_networks.each do |net|
-      addr = @pool.address_for(@machine)
-      @env[:ui].info "Reassigning #{addr.inspect} to #{@machine.id}", :prefix => true
+  def assign_address(machine)
+    machine_auto_networks(machine).each do |net|
+      addr = @pool.address_for(machine)
+      @env[:ui].info "Reassigning #{addr.inspect} to #{machine.id}", :prefix => true
       filter_private_network(net, addr)
     end
   end

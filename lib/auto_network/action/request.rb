@@ -14,19 +14,15 @@ class AutoNetwork::Action::Request
     @pool    = @env[:auto_network_pool]
     @machine = @env[:machine]
 
-    request_address if machine_needs_address?
+    request_address unless machine_has_address(@machine)
 
     @app.call(@env)
   end
 
   private
 
-  def machine_needs_address?
-    @machine and @pool.address_for(@machine).nil?
-  end
-
   def request_address
-    auto_networks.each do |net|
+    machine_auto_networks(@machine).each do |net|
       addr = @pool.request(@machine)
       @env[:ui].info "Assigning #{addr.inspect} to '#{@machine.id}'", :prefix => true
       filter_private_network(net, addr)

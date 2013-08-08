@@ -1,11 +1,16 @@
 module AutoNetwork
   module ActionHelpers
 
+    # @param [Vagrant::Machine]
+    def machine_has_address?(machine)
+      !!(machine and @pool.address_for(machine))
+    end
+
     # Fetch all private networks that are tagged for auto networking
     #
     # @param iface [Array<Symbol, Hash>]
-    def auto_networks
-      @machine.config.vm.networks.select do |(net_type, options)|
+    def machine_auto_networks(machine)
+      machine.config.vm.networks.select do |(net_type, options)|
         net_type == :private_network and options[:auto_network]
       end
     end
