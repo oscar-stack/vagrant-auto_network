@@ -11,11 +11,11 @@ module AutoNetwork
     DESC
 
     action_hook('Auto network: initialize address pool') do |hook|
-      hook.prepend AutoNetwork::Action::GenPool
+      hook.prepend AutoNetwork::Action::LoadPool
     end
 
     action_hook('Auto network: filter private networks', :environment_load) do |hook|
-      action = AutoNetwork::Action::GenPool
+      action = AutoNetwork::Action::LoadPool
       hook.after(action, AutoNetwork::Action::FilterNetworks)
     end
 

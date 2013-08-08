@@ -1,7 +1,7 @@
 require 'auto_network'
 require 'yaml'
 
-class AutoNetwork::Action::GenPool
+class AutoNetwork::Action::LoadPool
 
   def initialize(app, env)
     @app, @env = app, env
