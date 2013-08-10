@@ -1,6 +1,14 @@
 vagrant-auto_network
 ====================
 
+0.2.1
+-----
+
+2013-08-10
+
+  * Fix issue where running vagrant outside of an environment could cause
+    stacktraces.
+
 0.2.0
 -----
 
