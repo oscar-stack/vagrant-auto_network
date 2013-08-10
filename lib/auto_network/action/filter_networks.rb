@@ -23,20 +23,28 @@ class AutoNetwork::Action::FilterNetworks
   def call(env)
     @env = env
 
-    @pool      = @env[:auto_network_pool]
-    global_env = @env[:env]
+    @pool       = @env[:auto_network_pool]
+    @global_env = @env[:env]
 
-    machines_for_env(global_env).each do |machine|
-      assign_address(machine) if machine_has_address?(machine)
-    end
+    filter if has_working_env?
 
     @app.call(@env)
   end
 
   private
 
-  def machines_for_env(global_env)
-    global_env.active_machines.map { |vm_id| global_env.machine(*vm_id) }
+  def has_working_env?
+    !!(@global_env.local_data_path)
+  end
+
+  def filter
+    machines_for_env.each do |machine|
+      assign_address(machine) if machine_has_address?(machine)
+    end
+  end
+
+  def machines_for_env
+    @global_env.active_machines.map { |vm_id| @global_env.machine(*vm_id) }
   end
 
   def assign_address(machine)
