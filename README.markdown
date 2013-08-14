@@ -25,7 +25,6 @@ Usage
       config.vm.define 'first' do |node|
         node.vm.box = "centos-5-i386"
 
-        node.vm.extend AutoNetwork::Mixin
         node.vm.network :private_network, :auto_network => true
       end
 
