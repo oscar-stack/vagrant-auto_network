@@ -47,7 +47,7 @@ The default pool range has been hardcoded as '10.20.1.2/24', pending the
 ability to query the host virtual network adapters for their configuration.
 To change this, add the following _before_ the Vagrant configuration block:
 
-    AutoNetwork.default_pool = '172.16.0.0/12'
+    AutoNetwork.default_pool = '172.16.0.0/24'
 
 Contact
 -------
