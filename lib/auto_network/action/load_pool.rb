@@ -6,7 +6,11 @@ class AutoNetwork::Action::LoadPool
   def initialize(app, env)
     @app, @env = app, env
 
-    @config_path = @env[:home_path].join('auto_network')
+    if @env[:home_path]
+      @config_path = @env[:home_path].join('auto_network')
+    else
+      @config_path = Pathname.new('~/.vagrant.d/auto_network')
+    end
     @statefile   = @config_path.join('pool.yaml')
   end
 
@@ -35,7 +39,11 @@ class AutoNetwork::Action::LoadPool
       pool = YAML.load(@statefile.read)
     else
       range = AutoNetwork.default_pool
-      @env[:ui].info "No auto_network pool available, generating a pool with the range #{range}"
+      if @env[:ui]
+        @env[:ui].info "No auto_network pool available, generating a pool with the range #{range}"
+      else
+        @env.ui.info "No auto_network pool available, generating a pool with the range #{range}"
+      end
       pool = AutoNetwork::Pool.new(range)
     end
     @env[:auto_network_pool] = pool
