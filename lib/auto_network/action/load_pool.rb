@@ -5,9 +5,6 @@ class AutoNetwork::Action::LoadPool
 
   def initialize(app, env)
     @app, @env = app, env
-
-    @config_path = @env[:home_path].join('auto_network')
-    @statefile   = @config_path.join('pool.yaml')
   end
 
   # Handle the loading and unloading of the auto_network pool
@@ -22,12 +19,26 @@ class AutoNetwork::Action::LoadPool
   def call(env)
     @env = env
 
-    deserialize!
-    @app.call(@env)
-    serialize!
+    if env_ready?
+      setup_ivars
+      deserialize!
+      @app.call(@env)
+      serialize!
+    else
+      @app.call(@env)
+    end
   end
 
   private
+
+  def env_ready?
+    !!@env[:home_path]
+  end
+
+  def setup_ivars
+    @config_path = @env[:home_path].join('auto_network')
+    @statefile   = @config_path.join('pool.yaml')
+  end
 
   def deserialize!
     pool = nil
