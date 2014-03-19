@@ -1,6 +1,17 @@
 vagrant-auto_network
 ====================
 
+0.2.2
+-----
+
+2014-03-19
+
+This is a backwards compatible feature release
+
+  * (GH-7) Only use load_pool middleware when Vagrant environment is fully
+    initialized.
+
+
 0.2.1
 -----
 
