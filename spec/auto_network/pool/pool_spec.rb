@@ -2,8 +2,24 @@ require 'spec_helper'
 
 describe AutoNetwork::Pool do
   let(:ip_range) { '10.20.1.0/24' }
-  let(:machine_a) { double(:name => 'machine_a', :id => 'some-uuid') }
-  let(:machine_b) { double(:name => 'machine_b', :id => 'some-other-uuid') }
+  let(:machine_a) do
+    machine = double(
+      :name => 'machine_a',
+      :id   => 'some-uuid',
+    )
+    machine.stub_chain(:env, :root_path, :to_s).and_return('/some/Vagrantfile')
+
+    machine
+  end
+  let(:machine_b) do
+    machine = double(
+      :name => 'machine_b',
+      :id   => 'some-uuid',
+    )
+    machine.stub_chain(:env, :root_path, :to_s).and_return('/some/Vagrantfile')
+
+    machine
+  end
 
   subject { AutoNetwork::Pool.new(ip_range) }
 

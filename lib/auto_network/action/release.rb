@@ -31,7 +31,7 @@ class AutoNetwork::Action::Release
 
   def release_network_addresses
     addr = @pool.address_for(@machine)
-    @env[:ui].info "Releasing #{addr.inspect} from #{@machine.id}", :prefix => true
+    @env[:ui].info "Releasing #{addr.inspect} from #{@machine.name}", :prefix => true
     @pool.release(@machine)
   end
 end

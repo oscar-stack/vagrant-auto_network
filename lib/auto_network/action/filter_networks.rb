@@ -50,7 +50,7 @@ class AutoNetwork::Action::FilterNetworks
   def assign_address(machine)
     machine_auto_networks(machine).each do |net|
       addr = @pool.address_for(machine)
-      @logger.info "Reassigning #{addr.inspect} to existing machine #{machine.id}"
+      @logger.info "Reassigning #{addr.inspect} to existing machine #{machine.name}"
       filter_private_network(net, addr)
     end
   end
