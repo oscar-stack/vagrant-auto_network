@@ -13,6 +13,8 @@ module AutoNetwork
       error_key(:pool_exhausted, 'vagrant_auto_network')
     end
 
+    attr_accessor :network_range
+
     # Create a new Pool object that manages a range of IP addresses.
     #
     # @param network_range [String] The network address range to use as the

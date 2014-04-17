@@ -41,15 +41,23 @@ class AutoNetwork::Action::LoadPool
   end
 
   def deserialize!
-    pool = nil
+    pool_manager = nil
     if @statefile.exist?
-      pool = YAML.load(@statefile.read)
+      pool_manager = YAML.load(@statefile.read)
+      if pool_manager.is_a? AutoNetwork::Pool
+        # This happens when the serialized pool.yaml contains data created by
+        # an AutoNetwork version that pre-dates multiprovider support. Upgrade
+        # to a PoolManager and assume the serialized Pool manages IP addresses
+        # for VirtualBox.
+        @env[:ui].info "Upgrading old AutoNetwork Pool to a PoolManager"
+        pool_manager = AutoNetwork::PoolManager.new({'virtualbox' => pool_manager})
+      end
     else
       range = AutoNetwork.default_pool
       @env[:ui].info "No auto_network pool available, generating a pool with the range #{range}"
-      pool = AutoNetwork::Pool.new(range)
+      pool_manager = AutoNetwork::PoolManager.new({'virtualbox' => AutoNetwork::Pool.new(range)})
     end
-    @env[:auto_network_pool] = pool
+    @env[:auto_network_pool] = pool_manager
   end
 
   def serialize!
