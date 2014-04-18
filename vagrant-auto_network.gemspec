@@ -17,4 +17,6 @@ Gem::Specification.new do |gem|
   gem.require_path = 'lib'
 
   gem.license = 'Apache 2.0'
+
+  gem.add_development_dependency 'rspec', '~> 2.14.0'
 end
