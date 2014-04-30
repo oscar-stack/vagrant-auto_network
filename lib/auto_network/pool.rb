@@ -1,4 +1,5 @@
 require 'ipaddr'
+require 'vagrant/errors'
 
 module AutoNetwork
   class Pool
