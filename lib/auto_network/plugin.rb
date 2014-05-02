@@ -19,14 +19,13 @@ module AutoNetwork
       hook.after(action, AutoNetwork::Action::FilterNetworks)
     end
 
-    action_hook('Auto network: request address', :machine_action_up) do |hook|
-      action = VagrantPlugins::ProviderVirtualBox::Action::Network
+    action_hook('Auto network: request address') do |hook|
+      action = Vagrant::Action::Builtin::ConfigValidate
       hook.before(action, AutoNetwork::Action::Request)
     end
 
     action_hook('Auto network: release address', :machine_action_destroy) do |hook|
-      action = VagrantPlugins::ProviderVirtualBox::Action::Destroy
-      hook.before(action, AutoNetwork::Action::Release)
+      hook.append(AutoNetwork::Action::Release)
     end
   end
 end

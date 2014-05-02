@@ -13,6 +13,8 @@ module AutoNetwork
       error_key(:pool_exhausted, 'vagrant_auto_network')
     end
 
+    attr_accessor :network_range
+
     # Create a new Pool object that manages a range of IP addresses.
     #
     # @param network_range [String] The network address range to use as the
@@ -33,7 +35,7 @@ module AutoNetwork
       if (address = address_for(machine))
         return address
       elsif (address = next_available_lease)
-        @pool[address] = machine.id
+        @pool[address] = id_for(machine)
         return address
       else
         raise PoolExhaustedError,
@@ -58,10 +60,16 @@ module AutoNetwork
     # @return [IPAddr] the IP address assigned to the machine.
     # @return [nil] if the machine has no address assigned.
     def address_for(machine)
-      return nil if machine.id.nil?
-      next_addr, _ = @pool.find { |(addr, id)| machine.id == id }
+      next_addr, _ = @pool.find { |(addr, id)| id_for(machine) == id }
 
       next_addr
+    end
+
+    def id_for(machine)
+      {
+        'path' => machine.env.root_path.to_s,
+        'name' => machine.name.to_s,
+      }
     end
 
     private

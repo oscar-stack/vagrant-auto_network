@@ -32,7 +32,7 @@ class AutoNetwork::Action::Request
   def request_address
     machine_auto_networks(@machine).each do |net|
       addr = @pool.request(@machine)
-      @env[:ui].info "Assigning #{addr.inspect} to '#{@machine.id}'", :prefix => true
+      @env[:ui].info "Assigning #{addr.inspect} to '#{@machine.name}'", :prefix => true
       filter_private_network(net, addr)
     end
   end
