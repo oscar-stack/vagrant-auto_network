@@ -62,9 +62,18 @@ module AutoNetwork
     # @return [IPAddr] the IP address assigned to the machine.
     # @return [nil] if the machine has no address assigned.
     def address_for(machine)
-      next_addr, _ = @pool.find { |(addr, id)| id_for(machine) == id }
+      machine_id = id_for(machine)
+      addr, _ = @pool.find do |(addr, id)|
+        if id.is_a?(String)
+          # Check for old-style UUID values. These should eventually cycle out
+          # as machines are destroyed.
+          id == machine.id
+        else
+          id == machine_id
+        end
+      end
 
-      next_addr
+      addr
     end
 
     def id_for(machine)
