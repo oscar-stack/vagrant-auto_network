@@ -25,6 +25,11 @@ module AutoNetwork
     end
 
     action_hook('Auto network: release address', :machine_action_destroy) do |hook|
+      # This is redundant, but the VirtualBox Destroy Action flushes UUID
+      # values. So we double the  hook here as it is our only chance to clean
+      # old-style IDs out of the cache.
+      hook.before(VagrantPlugins::ProviderVirtualBox::Action::Destroy, AutoNetwork::Action::Release)
+
       hook.append(AutoNetwork::Action::Release)
     end
   end
