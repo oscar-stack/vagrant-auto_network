@@ -97,8 +97,11 @@ module AutoNetwork
     # @return [AutoNetwork::Pool] the pool associated with the machine
     #   provider.
     def generate_pool_for(machine)
-      @pool_storage['pools'][machine.provider_name.to_s] = AutoNetwork::Pool.new(next_pool_range)
-      @pool_storage['pools'][machine.provider_name.to_s]
+      if lookup_pool_for(machine).nil?
+        @pool_storage['pools'][machine.provider_name.to_s] = AutoNetwork::Pool.new(next_pool_range)
+      end
+
+      lookup_pool_for(machine)
     end
 
     # Scan the list of allocated pools and determine the next usable address
