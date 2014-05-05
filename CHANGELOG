@@ -1,6 +1,32 @@
 vagrant-auto_network
 ====================
 
+1.0.0
+-----
+
+2014-05-05
+
+This is a mostly-backwards compatible feature release.
+
+For this release, serialization format has been completely re-written to add
+support for multiple providers and to better manage global state and guard
+against race conditions. Care has been taken to support existing AutoNetwork
+environments, but it is possible that some breakage will occur.
+
+Specifically, the following issues have been addressed:
+
+  * (GH-12) Support for more than just the VirtualBox provider. The
+		implementation has been tested against the VMware Fusion provider but
+		should be general enough to support other providers as well.
+
+  * (GH-2) The infamous `0.0.0.0` hack is no longer necessary when using
+	  AutoNetwork.
+
+  * (GH-6) The IP address pools managed by AutoNetwork are now backed by a
+	  storage mechanism that offers more resiliance to race conditions and data
+		loss from aborted actions.
+
+
 0.2.2
 -----
 
