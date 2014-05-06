@@ -11,17 +11,11 @@ shared_examples 'provider/auto_network' do |provider, options|
     assert_execute('vagrant', 'box', 'add', 'box', options[:box])
   end
 
-  after do
-    assert_execute('vagrant', 'destroy', '--force', log: false)
-  end
-
   it 'manages IP address allocation for the lifecycle of a VM' do
-    result = execute('vagrant', 'up', "--provider=#{provider}")
-    expect(result).to exit_with(0)
+    result = assert_execute('vagrant', 'up', "--provider=#{provider}")
     expect(result.stdout).to match(/Assigning "10\.42\.1\.2" to 'default'/)
 
-    result = execute('vagrant', 'destroy', '--force', log: false)
-    expect(result).to exit_with(0)
+    result = assert_execute('vagrant', 'destroy', '--force', log: false)
     expect(result.stdout).to match(/Releasing "10\.42\.1\.2" from default/)
   end
 end
