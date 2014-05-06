@@ -1,3 +1,4 @@
+require 'pathname'
 require 'yaml/store'
 require 'auto_network/pool'
 
@@ -19,6 +20,10 @@ module AutoNetwork
     # @param path [String, Pathname] the location of the new pool file.
     # @return [void]
     def self.init(path)
+      path = Pathname.new(path)
+      dir = path.dirname
+
+      dir.mkpath unless dir.exist?
       File.write(path, POOLFILE_SKELETON.to_yaml)
     end
 
