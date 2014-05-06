@@ -1,0 +1,19 @@
+# Not strictly what one would do, but this test is rigged to run under Bundler.
+# So, the Vagrant plugin loader is not available, but we do have access to the
+# Bundler environment for the project.
+require 'vagrant-auto_network'
+
+# If this test is being run on a box that also uses auto_network in a normal
+# Vagrant environment then there will already be a network interface listening
+# on 10.20.1.0/24. Shift the default address to avoid clashes.
+AutoNetwork.default_pool = '10.42.1.0/24'
+
+Vagrant.configure('2') do |config|
+  config.vm.provider 'virtualbox' do |vb|
+    # Clean up network interface after tests.
+    vb.destroy_unused_network_interfaces = true
+  end
+
+  config.vm.box = 'box'
+  config.vm.network 'private_network', :auto_network => true
+end
