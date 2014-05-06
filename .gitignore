@@ -1,1 +1,7 @@
+.bundle
+.yardoc
+Gemfile.local
+Gemfile.lock
 acceptance/artifacts
+coverage
+doc
