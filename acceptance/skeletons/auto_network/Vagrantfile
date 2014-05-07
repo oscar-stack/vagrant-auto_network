@@ -3,10 +3,11 @@
 # Bundler environment for the project.
 require 'vagrant-auto_network'
 
-# If this test is being run on a box that also uses auto_network in a normal
-# Vagrant environment then there will already be a network interface listening
-# on 10.20.1.0/24. Shift the default address to avoid clashes.
-AutoNetwork.default_pool = '10.42.1.0/24'
+# If this test is being run on a host that also uses auto_network in a normal
+# Vagrant environment then there will already be network interfaces listening.
+# Most likely in the range of 10.20.0.0/16. The following environment variable
+# is set per-provider in the vagrant-spec config.
+AutoNetwork.default_pool = ENV["AUTO_NETWORK_TEST_RANGE"]
 
 Vagrant.configure('2') do |config|
   config.vm.provider 'virtualbox' do |vb|

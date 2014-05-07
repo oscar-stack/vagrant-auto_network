@@ -5,6 +5,7 @@ shared_examples 'provider/auto_network' do |provider, options|
   end
 
   include_context 'acceptance'
+  let(:extra_env) { options[:env_vars] }
 
   before do
     environment.skeleton('auto_network')
@@ -21,12 +22,12 @@ shared_examples 'provider/auto_network' do |provider, options|
   # invocation is dependant on the state created by the prior command.
   it 'manages IP address allocation for the lifecycle of a VM' do
     result = assert_execute('vagrant', 'up', "--provider=#{provider}")
-    expect(result.stdout).to match(/Assigning "10\.42\.1\.2" to 'default'/)
+    expect(result.stdout).to match(/Assigning "\S+" to 'default'/)
 
     assert_execute('vagrant', 'status')
     assert_execute('vagrant', 'reload', 'default')
 
     result = assert_execute('vagrant', 'destroy', '--force')
-    expect(result.stdout).to match(/Releasing "10\.42\.1\.2" from default/)
+    expect(result.stdout).to match(/Releasing "\S+" from default/)
   end
 end
