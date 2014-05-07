@@ -1,7 +1,7 @@
 module AutoNetwork
 
-  require 'auto_network/default_pool'
-  extend DefaultPool
+  require 'auto_network/settings'
+  extend Settings
 
   require 'auto_network/action'
   require 'auto_network/plugin'
