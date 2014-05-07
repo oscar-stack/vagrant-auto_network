@@ -7,3 +7,6 @@ en:
       probably due to VMs being deleted outside of Vagrant. Check the
       auto_network pool configuration file and remove the machine IDs from
       addresses that are no longer in use, or add addresses to the pool.
+
+    invalid_setting: |-
+      The following value is not a valid setting for '%{setting_name}': '%{value}'
