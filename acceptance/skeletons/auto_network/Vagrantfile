@@ -1,8 +1,3 @@
-# Not strictly what one would do, but this test is rigged to run under Bundler.
-# So, the Vagrant plugin loader is not available, but we do have access to the
-# Bundler environment for the project.
-require 'vagrant-auto_network'
-
 # If this test is being run on a host that also uses auto_network in a normal
 # Vagrant environment then there will already be network interfaces listening.
 # Most likely in the range of 10.20.0.0/16. The following environment variable

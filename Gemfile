@@ -1,7 +1,11 @@
 source 'https://rubygems.org'
 ruby '2.0.0'
 
-gemspec
+# Using the :plugins group causes Vagrant to automagially load auto_network
+# during acceptance tests.
+group :plugins do
+  gemspec
+end
 
 group :development do
   gem 'vagrant', :github => 'mitchellh/vagrant', :tag => 'v1.5.4'
