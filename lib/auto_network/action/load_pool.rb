@@ -20,7 +20,7 @@ class AutoNetwork::Action::LoadPool
 
     if env_ready?
       setup_ivars
-      deserialize!
+      deserialize! if AutoNetwork.pool_manager.nil?
       @app.call(@env)
     else
       @app.call(@env)
@@ -30,11 +30,11 @@ class AutoNetwork::Action::LoadPool
   private
 
   def env_ready?
-    !!@env[:home_path]
+    !!@env[:env].home_path
   end
 
   def setup_ivars
-    @config_path = @env[:home_path].join('auto_network')
+    @config_path = @env[:env].home_path.join('auto_network')
     @statefile   = @config_path.join('pool.yaml')
   end
 
