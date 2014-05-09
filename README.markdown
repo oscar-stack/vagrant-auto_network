@@ -3,6 +3,8 @@ Vagrant Auto-network
 
 Automatically configure Vagrant private network interfaces.
 
+[![Build Status](https://travis-ci.org/adrienthebo/vagrant-auto_network.svg?branch=travis-ci)](https://travis-ci.org/adrienthebo/vagrant-auto_network)
+
 Summary
 -------
 
