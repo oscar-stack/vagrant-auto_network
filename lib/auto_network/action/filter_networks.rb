@@ -23,7 +23,6 @@ class AutoNetwork::Action::FilterNetworks
   def call(env)
     @env = env
 
-    @pool       = @env[:auto_network_pool]
     @global_env = @env[:env]
 
     filter if has_working_env?
@@ -49,7 +48,7 @@ class AutoNetwork::Action::FilterNetworks
 
   def assign_address(machine)
     machine_auto_networks(machine).each do |net|
-      addr = @pool.address_for(machine)
+      addr = AutoNetwork.pool_manager.address_for(machine)
       @logger.info "Reassigning #{addr.inspect} to existing machine #{machine.name}"
       filter_private_network(net, addr)
     end

@@ -39,6 +39,6 @@ class AutoNetwork::Action::LoadPool
   end
 
   def deserialize!
-    @env[:auto_network_pool] = AutoNetwork::PoolManager.new(@statefile)
+    AutoNetwork.pool_manager = AutoNetwork::PoolManager.new(@statefile)
   end
 end
