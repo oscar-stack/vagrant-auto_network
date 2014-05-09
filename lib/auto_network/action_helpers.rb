@@ -7,7 +7,7 @@ module AutoNetwork
     #
     # @return [true, false]
     def machine_has_address?(machine)
-      !!(machine and @pool.address_for(machine))
+      !!(machine and AutoNetwork.pool_manager.address_for(machine))
     end
 
     # Fetch all private networks that are tagged for auto networking

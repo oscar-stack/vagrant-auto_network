@@ -13,6 +13,10 @@ module AutoNetwork
       error_key(:invalid_setting, 'vagrant_auto_network')
     end
 
+    # @!attribute [rw] pool_manager
+    #   @return [AutoNetwork::PoolManager, nil]
+    attr_accessor :pool_manager
+
     # Unless overriden, this will be the IP range assigned to the very first
     # {AutoNetwork::Pool} created by {AutoNetwork::PoolManager} instances.
     DEFAULT_POOL = '10.20.1.0/24'

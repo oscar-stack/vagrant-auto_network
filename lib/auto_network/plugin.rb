@@ -10,13 +10,12 @@ module AutoNetwork
     networks.
     DESC
 
-    action_hook('Auto network: initialize address pool') do |hook|
-      hook.prepend AutoNetwork::Action::LoadPool
-    end
-
     action_hook('Auto network: filter private networks', :environment_load) do |hook|
-      action = AutoNetwork::Action::LoadPool
-      hook.after(action, AutoNetwork::Action::FilterNetworks)
+      load_pool = AutoNetwork::Action::LoadPool
+
+      # TODO: This should be re-factored to use ActionBuilder.
+      hook.prepend(load_pool)
+      hook.after(load_pool, AutoNetwork::Action::FilterNetworks)
     end
 
     action_hook('Auto network: request address') do |hook|
