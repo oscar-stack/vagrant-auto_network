@@ -3,7 +3,7 @@ module AutoNetwork
 
     # Determine if the given machine exists and has an auto_network address
     #
-    # @param [Vagrant::Machine]
+    # @param machine [Vagrant::Machine]
     #
     # @return [true, false]
     def machine_has_address?(machine)
@@ -12,7 +12,7 @@ module AutoNetwork
 
     # Fetch all private networks that are tagged for auto networking
     #
-    # @param iface [Array<Symbol, Hash>]
+    # @param machine [Vagrant::Machine]
     #
     # @return [Array<Symbol, Hash>] All auto_networks
     def machine_auto_networks(machine)
