@@ -2,6 +2,9 @@
 .yardoc
 Gemfile.local
 Gemfile.lock
+license-vagrant-vmware-fusion.lic
+vagrant-spec.config.rb
 acceptance/artifacts
 coverage
 doc
+rgloader
