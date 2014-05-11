@@ -98,4 +98,13 @@ EOF
       expect(current_ip(test_machine)).to be_nil
     end
   end
+
+  # Testing IP allocation is pretty tricky since it hooks into
+  # provider-specific behavior that our dummy provider does not have.
+  # Currently, this behavior is exercised by the acceptance tests.
+  context 'when creating a machine' do
+    it 'allocates an IP address' do
+      pending 'This is currently delegated to the acceptance suite.'
+    end
+  end
 end
