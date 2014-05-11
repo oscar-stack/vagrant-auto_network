@@ -1,16 +1,6 @@
-require 'auto_network/action_helpers'
-require 'log4r'
+require 'auto_network/action/base'
 
-class AutoNetwork::Action::FilterNetworks
-
-  include AutoNetwork::ActionHelpers
-
-  def initialize(app, env)
-    @app, @env = app, env
-
-    @logger = Log4r::Logger.new('vagrant::auto_network::filter_networks')
-  end
-
+class AutoNetwork::Action::FilterNetworks < AutoNetwork::Action::Base
   # Convert auto_network interfaces to static private_network interfaces.
   #
   # @param env [Hash]
@@ -49,7 +39,6 @@ class AutoNetwork::Action::FilterNetworks
   def assign_address(machine)
     machine_auto_networks(machine).each do |net|
       addr = AutoNetwork.pool_manager.address_for(machine)
-      @logger.info "Reassigning #{addr.inspect} to existing machine #{machine.name}"
       filter_private_network(net, addr)
     end
   end

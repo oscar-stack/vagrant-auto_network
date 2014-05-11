@@ -1,13 +1,6 @@
-require 'auto_network/action_helpers'
+require 'auto_network/action/base'
 
-class AutoNetwork::Action::Release
-
-  include AutoNetwork::ActionHelpers
-
-  def initialize(app, env)
-    @app, @env = app, env
-  end
-
+class AutoNetwork::Action::Release < AutoNetwork::Action::Base
   # Release auto_network IP address on VM destruction
   #
   # @param env [Hash]

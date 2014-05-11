@@ -1,13 +1,6 @@
-require 'auto_network/action_helpers'
+require 'auto_network/action/base'
 
-class AutoNetwork::Action::Request
-
-  include AutoNetwork::ActionHelpers
-
-  def initialize(app, env)
-    @app, @env = app, env
-  end
-
+class AutoNetwork::Action::Request < AutoNetwork::Action::Base
   # Request an auto_network IP address on VM creation
   #
   # @param env [Hash]

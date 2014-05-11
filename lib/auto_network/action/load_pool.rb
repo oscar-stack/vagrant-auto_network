@@ -1,11 +1,6 @@
-require 'auto_network'
+require 'auto_network/action/base'
 
-class AutoNetwork::Action::LoadPool
-
-  def initialize(app, env)
-    @app, @env = app, env
-  end
-
+class AutoNetwork::Action::LoadPool < AutoNetwork::Action::Base
   # Handle the loading and unloading of the auto_network pool
   #
   # @param env [Hash]
