@@ -1,4 +1,5 @@
 require 'ipaddr'
+require 'auto_network/pool_manager'
 require 'vagrant/errors'
 
 module AutoNetwork
@@ -13,9 +14,28 @@ module AutoNetwork
       error_key(:invalid_setting, 'vagrant_auto_network')
     end
 
-    # @!attribute [rw] pool_manager
-    #   @return [AutoNetwork::PoolManager, nil]
+    # Access the global {AutoNetwork::PoolManager} instance.
+    # @return [AutoNetwork::PoolManager, nil]
     attr_accessor :pool_manager
+
+    # Assertively retrieve the global {AutoNetwork::PoolManager} instance.
+    #
+    # Raises an error if {#pool_manager} has been set to `nil` or an invalid
+    # value.
+    #
+    # @return [AutoNetwork::PoolManager]
+    # @raise [InvalidSettingErrror] If {#pool_manager} is not set to a usable
+    #   value.
+    def active_pool_manager
+      manager = pool_manager
+      unless manager.is_a?(AutoNetwork::PoolManager)
+        raise InvalidSettingErrror,
+          :setting_name => 'pool_manager',
+          :value => manager
+      end
+
+      manager
+    end
 
     # Unless overriden, this will be the IP range assigned to the very first
     # {AutoNetwork::Pool} created by {AutoNetwork::PoolManager} instances.

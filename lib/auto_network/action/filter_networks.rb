@@ -38,7 +38,7 @@ class AutoNetwork::Action::FilterNetworks < AutoNetwork::Action::Base
 
   def assign_address(machine)
     machine_auto_networks(machine).each do |net|
-      addr = AutoNetwork.pool_manager.address_for(machine)
+      addr = AutoNetwork.active_pool_manager.address_for(machine)
       filter_private_network(net, addr)
     end
   end

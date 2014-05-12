@@ -19,4 +19,12 @@ describe AutoNetwork::Settings do
     end
 
   end
+
+  describe 'pool_manager' do
+    context 'when unset' do
+      it 'raises an error when accessed through active_pool_manager' do
+        expect { subject.active_pool_manager }.to raise_error(AutoNetwork::Settings::InvalidSettingErrror)
+      end
+    end
+  end
 end

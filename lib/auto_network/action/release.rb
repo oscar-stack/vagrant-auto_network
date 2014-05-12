@@ -22,8 +22,8 @@ class AutoNetwork::Action::Release < AutoNetwork::Action::Base
   private
 
   def release_network_addresses
-    addr = AutoNetwork.pool_manager.address_for(@machine)
+    addr = AutoNetwork.active_pool_manager.address_for(@machine)
     @env[:ui].info "Releasing #{addr.inspect} from #{@machine.name}", :prefix => true
-    AutoNetwork.pool_manager.release(@machine)
+    AutoNetwork.active_pool_manager.release(@machine)
   end
 end
