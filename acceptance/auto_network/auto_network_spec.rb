@@ -22,12 +22,12 @@ shared_examples 'provider/auto_network' do |provider, options|
   # invocation is dependant on the state created by the prior command.
   it 'manages IP address allocation for the lifecycle of a VM' do
     result = assert_execute('vagrant', 'up', "--provider=#{provider}")
-    expect(result.stdout).to match(/Assigning "\S+" to 'default'/)
+    expect(result.stdout).to match(/AutoNetwork assigning "\S+" to 'default'/)
 
     assert_execute('vagrant', 'status')
     assert_execute('vagrant', 'reload', 'default')
 
     result = assert_execute('vagrant', 'destroy', '--force')
-    expect(result.stdout).to match(/Releasing "\S+" from default/)
+    expect(result.stdout).to match(/AutoNetwork releasing "\S+" from 'default'/)
   end
 end

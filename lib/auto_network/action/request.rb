@@ -24,7 +24,8 @@ class AutoNetwork::Action::Request < AutoNetwork::Action::Base
   def request_address
     machine_auto_networks(@machine).each do |net|
       addr = AutoNetwork.active_pool_manager.request(@machine)
-      @env[:ui].info "Assigning #{addr.inspect} to '#{@machine.name}'", :prefix => true
+      @env[:ui].info "AutoNetwork assigning #{addr.inspect} to '#{@machine.name}'",
+        :prefix => true
       filter_private_network(net, addr)
     end
   end

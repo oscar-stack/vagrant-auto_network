@@ -34,6 +34,9 @@ class AutoNetwork::Action::LoadPool < AutoNetwork::Action::Base
   end
 
   def deserialize!
+    unless @statefile.exist?
+      @env[:env].ui.info "Initializing AutoNetwork pool storage."
+    end
     AutoNetwork.pool_manager = AutoNetwork::PoolManager.new(@statefile)
   end
 end
