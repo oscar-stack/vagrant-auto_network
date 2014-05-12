@@ -26,7 +26,23 @@ Specifically, the following issues have been addressed:
 	  storage mechanism that offers more resiliance to race conditions and data
 		loss from aborted actions.
 
+The following features have been removed:
+
 	* (GH-14) Remove depreciated AutoNetwork mixin module.
+
+
+1.0.0.rc1
+---------
+
+2014-05-12
+
+Changes since 1.0.0.beta2:
+
+  * Addition of integration tests that check for interoperability between
+	  AutoNetwork and Vagrant. Test suite automatically run by Travis CI.
+
+  * Internal refactoring and cleanup.
+
 
 1.0.0.beta2
 -----------
@@ -38,6 +54,7 @@ Bug Fixes:
   * (GH-20) Compatibility fixes for Vagrant 1.6
 
   * Ensure directories exist when creating `pool.yaml` for the first time.
+
 
 1.0.0.beta1
 -----------
