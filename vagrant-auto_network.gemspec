@@ -7,8 +7,8 @@ Gem::Specification.new do |gem|
   gem.name        = "vagrant-auto_network"
   gem.version     = AutoNetwork::VERSION
 
-  gem.authors  = 'Adrien Thebo'
-  gem.email    = 'adrien@somethingsinistral.net'
+  gem.authors  = ['Adrien Thebo', 'Charlie Sharpsteen']
+  gem.email    = ['adrien@somethingsinistral.net', 'source@sharpsteen.net']
   gem.homepage = 'https://github.com/adrienthebo/vagrant-auto_network'
 
   gem.summary     = "Automatically create an internal network for all vagrant boxes"
@@ -18,5 +18,6 @@ Gem::Specification.new do |gem|
 
   gem.license = 'Apache 2.0'
 
+  gem.add_development_dependency 'rake'
   gem.add_development_dependency 'rspec', '~> 2.14.0'
 end
