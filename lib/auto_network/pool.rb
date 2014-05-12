@@ -13,8 +13,7 @@ module AutoNetwork
       error_key(:pool_exhausted, 'vagrant_auto_network')
     end
 
-    # @!attribute [r] network_range
-    #   @return [String] The address range manged by this Pool instance.
+    # @return [String] The address range manged by this Pool instance.
     attr_reader :network_range
 
     # Create a new Pool object that manages a range of IP addresses.
@@ -76,6 +75,14 @@ module AutoNetwork
       addr
     end
 
+    # Compute the value that will be used to identify a machine. This value
+    # will be associated with IP addresses allocated to the machine.
+    #
+    # @param machine [Vagrant::Machine]
+    #
+    # @return [Hash{String=>String}] A hash containing the path to the
+    #   directory containing the Vagrantfile that defined the machine and the
+    #   machine name.
     def id_for(machine)
       {
         'path' => machine.env.root_path.to_s,

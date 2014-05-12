@@ -39,7 +39,7 @@ module AutoNetwork
     #
     # @param machine [Vagrant::Machine]
     #
-    # @return [Array<Symbol, Hash>] All auto_networks
+    # @return [Array(Symbol, Hash)] All auto_networks
     def machine_auto_networks(machine)
       machine.config.vm.networks.select do |(net_type, options)|
         net_type == :private_network and options[:auto_network]
@@ -52,7 +52,7 @@ module AutoNetwork
     # to strip out the auto_network configuration and make this behave like a
     # normal private network interface with a static IP address.
     #
-    # @param iface [Array<Symbol, Hash>]
+    # @param iface [Array(Symbol, Hash)]
     # @param addr [String] The static IP address to assign to the private network
     #
     # @return [void]
