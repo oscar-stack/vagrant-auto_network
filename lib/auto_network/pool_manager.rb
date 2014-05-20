@@ -46,27 +46,30 @@ module AutoNetwork
       end
     end
 
-    # {include:AutoNetwork::Pool#request}
+    # (see AutoNetwork::Pool#request)
     #
-    # @see AutoNetwork::Pool#request
+    # @see AutoNetwork::Pool#request This method is a proxy for
+    #   AutoNetwork::Pool#request
     def request(machine)
       with_pool_for(machine) do |pool|
         pool.request(machine)
       end
     end
 
-    # {include:AutoNetwork::Pool#release}
+    # (see AutoNetwork::Pool#release)
     #
-    # @see AutoNetwork::Pool#release
+    # @see AutoNetwork::Pool#release This method is a proxy for
+    #   AutoNetwork::Pool#release
     def release(machine)
       with_pool_for(machine) do |pool|
         pool.release(machine)
       end
     end
 
-    # {include:AutoNetwork::Pool#address_for}
+    # (see AutoNetwork::Pool#address_for)
     #
-    # @see AutoNetwork::Pool#address_for
+    # @see AutoNetwork::Pool#address_for This method is a proxy for
+    #   AutoNetwork::Pool#address_for
     def address_for(machine)
       with_pool_for(machine, read_only=true) do |pool|
         pool.address_for(machine)
