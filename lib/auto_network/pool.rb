@@ -83,6 +83,8 @@ module AutoNetwork
     # @return [Hash{String=>String}] A hash containing the path to the
     #   directory containing the Vagrantfile that defined the machine and the
     #   machine name.
+    #
+    # @since 1.0.0
     def id_for(machine)
       {
         'path' => machine.env.root_path.to_s,

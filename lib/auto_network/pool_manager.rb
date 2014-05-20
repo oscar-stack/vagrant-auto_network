@@ -16,6 +16,8 @@ module AutoNetwork
   # @see AutoNetwork::PoolStorage The object used to implement file-based
   #   persistance for this class.
   # @see AutoNetwork::Pool The objects managed by this class.
+  #
+  # @since 1.0.0
   class PoolManager
     # Create a new `PoolManager` instance with persistent storage.
     #

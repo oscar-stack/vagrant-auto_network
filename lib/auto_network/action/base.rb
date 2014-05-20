@@ -5,6 +5,8 @@ module AutoNetwork
   #
   # @abstract Subclass and override {#call} to implement a new AutoNetwork
   #   action.
+  #
+  # @since 1.0.0
   class Action::Base
     # Create a new action instance that is suitable for execution as part of
     # Vagrant middleware.

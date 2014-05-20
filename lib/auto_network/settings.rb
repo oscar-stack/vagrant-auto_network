@@ -5,6 +5,8 @@ require 'vagrant/errors'
 module AutoNetwork
   # This module is used by AutoNetwork to store global state when running under
   # Vagrant. This module is mixed into the top-level AutoNetwork namespace.
+  #
+  # @since 1.0.0
   module Settings
 
     # An error class raised when an invalid value is assigned to a setting.

@@ -30,6 +30,8 @@ module AutoNetwork
   #   pools:
   #     some_vagrant_provider_name: !ruby/object:AutoNetwork::Pool
   #       # Single serialized AutoNetwork::Pool
+  #
+  # @since 1.0.0
   class PoolStorage < YAML::Store
     # An integer indicating the current AutoNetwork serialization format.
     POOLFILE_VERSION = 2
