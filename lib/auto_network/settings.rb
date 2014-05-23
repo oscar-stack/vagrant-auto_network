@@ -33,7 +33,7 @@ module AutoNetwork
       unless manager.is_a?(AutoNetwork::PoolManager)
         raise InvalidSettingErrror,
           :setting_name => 'pool_manager',
-          :value => manager
+          :value => manager.inspect
       end
 
       manager
@@ -64,7 +64,7 @@ module AutoNetwork
       rescue ArgumentError
         raise InvalidSettingErrror,
           :setting_name => 'default_pool',
-          :value => pool
+          :value => pool.inspect
       end
 
       @default_pool = pool
