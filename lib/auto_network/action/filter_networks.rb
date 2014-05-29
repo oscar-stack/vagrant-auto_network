@@ -33,7 +33,16 @@ class AutoNetwork::Action::FilterNetworks < AutoNetwork::Action::Base
   end
 
   def machines_for_env
-    @global_env.active_machines.map { |vm_id| @global_env.machine(*vm_id) }
+    @global_env.active_machines.map do |vm_id|
+      begin
+        @global_env.machine(*vm_id)
+      rescue Vagrant::Errors::MachineNotFound
+        # This usually happens when the definition for a machine has been
+        # removed from the Vagrantfile, but the machine id still exists under
+        # the .vagrant directory.
+        nil
+      end
+    end.compact
   end
 
   def assign_address(machine)
