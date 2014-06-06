@@ -1,6 +1,20 @@
 vagrant-auto_network
 ====================
 
+1.0.1
+-----
+
+2014-06-06
+
+This is a backwards compatible bugfix release.
+
+  * (GH-23) Fix crashes occurring when a VM has a pre-allocated AutoNetwork IP
+    address.
+
+  * Fix errors raised when a machine exists in the `.vagrant` directory
+    but no longer has a config in the `Vagrantfile`.
+
+
 1.0.0
 -----
 
