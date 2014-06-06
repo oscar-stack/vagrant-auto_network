@@ -1,5 +1,8 @@
 require 'auto_network/action/base'
 
+
+# @todo This action should be renamed. It is more like a "pre-validation
+#   filter" than something that only fires during machine creation.
 class AutoNetwork::Action::Request < AutoNetwork::Action::Base
   # Request an auto_network IP address on VM creation
   #
@@ -12,20 +15,27 @@ class AutoNetwork::Action::Request < AutoNetwork::Action::Base
   def call(env)
     @env = env
 
-    @machine = @env[:machine]
+    machine = @env[:machine]
 
-    request_address unless machine_has_address?(@machine)
+    # Move along if this machine has no AutoNetwork interfaces.
+    @app.call(@env) if machine_auto_networks(machine).empty?
+
+    addr = AutoNetwork.active_pool_manager.address_for(machine)
+    if addr.nil?
+      addr = AutoNetwork.active_pool_manager.request(machine)
+      @env[:ui].info "AutoNetwork assigning #{addr.inspect} to '#{machine.name}'",
+        :prefix => true
+    end
+
+    filter_networks(machine, addr)
 
     @app.call(@env)
   end
 
   private
 
-  def request_address
-    machine_auto_networks(@machine).each do |net|
-      addr = AutoNetwork.active_pool_manager.request(@machine)
-      @env[:ui].info "AutoNetwork assigning #{addr.inspect} to '#{@machine.name}'",
-        :prefix => true
+  def filter_networks(machine, addr)
+    machine_auto_networks(machine).each do |net|
       filter_private_network(net, addr)
     end
   end
