@@ -47,7 +47,10 @@ describe AutoNetwork::Plugin do
 
         expect(current_ip(test_machine)).to be_nil
 
-        test_machine.action_raw(:request, subject)
+        # This emulates Machine#action_raw which didn't show up until
+        # Vagrant 1.6.0
+        action_env = { :machine => test_machine }
+        env.action_runner.run(subject, action_env)
 
         expect(current_ip(test_machine)).to eq('10.20.1.3')
       end
@@ -56,10 +59,10 @@ describe AutoNetwork::Plugin do
     context 'on a machine with an allocated IP address' do
       it 'assigns the address to unfiltered network interfaces' do
         env = test_env.create_vagrant_env
-
         test_machine = env.machine(:test3, :dummy)
 
-        test_machine.action_raw(:request, subject)
+        action_env = { :machine => test_machine }
+        env.action_runner.run(subject, action_env)
 
         _, network_opts = test_machine.config.vm.networks.find {|n| n.first == :private_network}
         expect(network_opts).to include(:ip => '10.20.1.4')
