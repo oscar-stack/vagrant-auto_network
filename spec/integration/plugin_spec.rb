@@ -2,7 +2,6 @@ require 'spec_helper'
 require_relative 'shared/auto_network_1x_context'
 
 describe AutoNetwork::Plugin do
-  include_context 'vagrant-unit'
   include_context 'auto_network 1.x'
 
   context 'when a vagrant environment is initialized' do
@@ -24,10 +23,6 @@ describe AutoNetwork::Plugin do
   end
 
   context 'when destroying a machine' do
-    def current_ip(machine)
-      settings.pool_manager.with_pool_for(machine) {|p| p.address_for(machine)}
-    end
-
     it 'releases the allocated IP address' do
       env = test_env.create_vagrant_env
       test_machine = env.machine(:test1, :dummy)

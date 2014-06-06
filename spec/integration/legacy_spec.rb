@@ -2,12 +2,7 @@ require 'spec_helper'
 require_relative 'shared/auto_network_0x_context'
 
 describe 'Working with AutoNetwork 0.x data' do
-  include_context 'vagrant-unit'
   include_context 'auto_network 0.x'
-
-  def current_ip(machine)
-    settings.pool_manager.with_pool_for(machine) {|p| p.address_for(machine)}
-  end
 
   before(:each) do
     env = test_env.create_vagrant_env
