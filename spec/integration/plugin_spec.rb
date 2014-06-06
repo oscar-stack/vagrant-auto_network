@@ -35,12 +35,35 @@ describe AutoNetwork::Plugin do
     end
   end
 
-  # Testing IP allocation is pretty tricky since it hooks into
-  # provider-specific behavior that our dummy provider does not have.
-  # Currently, this behavior is exercised by the acceptance tests.
-  context 'when creating a machine' do
-    it 'allocates an IP address' do
-      pending 'This is currently delegated to the acceptance suite.'
+  describe 'when running the request action' do
+    subject {
+      Vagrant::Action::Builder.new.tap {|b| b.use AutoNetwork::Action::Request }
+    }
+
+    context 'on a machine with no IP allocated' do
+      it 'allocates an IP address' do
+        env = test_env.create_vagrant_env
+        test_machine = env.machine(:test2, :dummy)
+
+        expect(current_ip(test_machine)).to be_nil
+
+        test_machine.action_raw(:request, subject)
+
+        expect(current_ip(test_machine)).to eq('10.20.1.3')
+      end
+    end
+
+    context 'on a machine with an allocated IP address' do
+      it 'assigns the address to unfiltered network interfaces' do
+        env = test_env.create_vagrant_env
+
+        test_machine = env.machine(:test3, :dummy)
+
+        test_machine.action_raw(:request, subject)
+
+        _, network_opts = test_machine.config.vm.networks.find {|n| n.first == :private_network}
+        expect(network_opts).to include(:ip => '10.20.1.4')
+      end
     end
   end
 end

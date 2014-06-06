@@ -43,10 +43,20 @@ shared_context 'auto_network integration' do
     # contexts.
     pool_file.open('w+') {|f| f.write pool_file_content}
 
+    # Three machines are defined:
+    #
+    #   - test1 has an IP allocated in the pool and an ID allocated in the
+    #     `.vagrant` directory.
+    #
+    #   - test2 has no IP or ID allocated.
+    #
+    #   - test3 has an allocated IP, but no ID.
     test_env.vagrantfile <<-EOF
 Vagrant.configure("2") do |config|
-  config.vm.define 'test1' do |node|
-    node.vm.network :private_network, :auto_network => true
+  %w[test1 test2 test3].each do |machine|
+    config.vm.define machine do |node|
+      node.vm.network :private_network, :auto_network => true
+    end
   end
 end
 EOF

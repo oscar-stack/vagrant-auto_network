@@ -15,6 +15,8 @@ pools:
         name: test1
       10.20.1.3: 
       10.20.1.4: 
+        path: #{test_env.workdir}
+        name: test3
       10.20.1.5: 
       10.20.1.6: 
 EOF
