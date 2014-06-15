@@ -11,11 +11,12 @@ module AutoNetwork
     DESC
 
     action_hook('Auto network: filter private networks', :environment_load) do |hook|
-      load_pool = AutoNetwork::Action::LoadPool
+      pool_loader = Vagrant::Action::Builder.new.tap do |b|
+        b.use AutoNetwork::Action::LoadPool
+        b.use AutoNetwork::Action::FilterNetworks
+      end
 
-      # TODO: This should be re-factored to use ActionBuilder.
-      hook.prepend(load_pool)
-      hook.after(load_pool, AutoNetwork::Action::FilterNetworks)
+      hook.prepend(pool_loader)
     end
 
     action_hook('Auto network: request address') do |hook|
