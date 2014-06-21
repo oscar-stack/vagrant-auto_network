@@ -53,6 +53,10 @@ shared_context 'auto_network integration' do
     #   - test3 has an allocated IP, but no ID.
     test_env.vagrantfile <<-EOF
 Vagrant.configure("2") do |config|
+  # Normal vanilla node.
+  config.vm.define 'plain'
+
+  # Test nodes with AutoNetwork enabled.
   %w[test1 test2 test3].each do |machine|
     config.vm.define machine do |node|
       node.vm.network :private_network, :auto_network => true

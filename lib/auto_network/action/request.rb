@@ -16,10 +16,17 @@ class AutoNetwork::Action::Request < AutoNetwork::Action::Base
     @env = env
 
     machine = @env[:machine]
+    auto_networks = machine_auto_networks(machine)
 
-    # Move along if this machine has no AutoNetwork interfaces.
-    @app.call(@env) if machine_auto_networks(machine).empty?
+    # Do nothing if there are no private networks using :auto_network => true
+    filter_networks(machine, auto_networks) unless auto_networks.empty?
 
+    @app.call(@env)
+  end
+
+  private
+
+  def filter_networks(machine, networks)
     addr = AutoNetwork.active_pool_manager.address_for(machine)
     if addr.nil?
       addr = AutoNetwork.active_pool_manager.request(machine)
@@ -27,15 +34,7 @@ class AutoNetwork::Action::Request < AutoNetwork::Action::Base
         :prefix => true
     end
 
-    filter_networks(machine, addr)
-
-    @app.call(@env)
-  end
-
-  private
-
-  def filter_networks(machine, addr)
-    machine_auto_networks(machine).each do |net|
+    networks.each do |net|
       filter_private_network(net, addr)
     end
   end

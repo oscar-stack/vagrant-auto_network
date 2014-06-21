@@ -68,5 +68,17 @@ describe AutoNetwork::Plugin do
         expect(network_opts).to include(:ip => '10.20.1.4')
       end
     end
+
+    context 'on a machine with no AutoNetwork networks' do
+      it 'does not allocate an IP address' do
+        env = test_env.create_vagrant_env
+        test_machine = env.machine(:plain, :dummy)
+
+        action_env = { :machine => test_machine }
+        env.action_runner.run(subject, action_env)
+
+        expect(current_ip(test_machine)).to be_nil
+      end
+    end
   end
 end
