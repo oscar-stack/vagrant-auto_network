@@ -1,6 +1,18 @@
 vagrant-auto_network
 ====================
 
+1.0.2
+-----
+
+2014-06-21
+
+This is a backwards compatible bugfix release.
+
+  * (GH-24) Fix improper allocations of IP addresses to machines that are not
+    using AutoNetwork. This regression was caused by the fix for GH-23 released
+    in version 1.0.1.
+
+
 1.0.1
 -----
 
