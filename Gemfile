@@ -20,6 +20,4 @@ group :test do
   gem 'vagrant-spec', :github => 'mitchellh/vagrant-spec', :ref => 'aae28ee'
 end
 
-if File.exists? "#{__FILE__}.local"
-  eval(File.read("#{__FILE__}.local"), binding)
-end
+eval_gemfile "#{__FILE__}.local" if File.exists? "#{__FILE__}.local"
