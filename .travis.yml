@@ -1,9 +1,9 @@
 ---
 language: ruby
 before_install:
-  - gem install bundler --version 1.5.3
-install: bundle $BUNDLER_VERSION install
-script: bundle $BUNDLER_VERSION exec rspec --color --format documentation
+  - gem install bundler --version $BUNDLER_VERSION
+install: bundle _${BUNDLER_VERSION}_ install
+script: bundle _${BUNDLER_VERSION}_ exec rspec --color --format documentation
 notifications:
   email: false
 rvm:
@@ -12,6 +12,6 @@ env:
   global:
     - NOKOGIRI_USE_SYSTEM_LIBRARIES=true
   matrix:
-    - TEST_VAGRANT_VERSION=v1.5.4 BUNDLER_VERSION=_1.5.3_
-    - TEST_VAGRANT_VERSION=v1.6.4
-    - TEST_VAGRANT_VERSION=HEAD
+    - TEST_VAGRANT_VERSION=v1.5.4 BUNDLER_VERSION=1.5.3
+    - TEST_VAGRANT_VERSION=v1.6.4 BUNDLER_VERSION=1.6.6
+    - TEST_VAGRANT_VERSION=HEAD   BUNDLER_VERSION=1.6.6
