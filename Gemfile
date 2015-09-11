@@ -1,12 +1,17 @@
 source 'https://rubygems.org'
-ruby '2.0.0'
+ruby '2.0.0' # Required by Vagrant 1.4 and newer.
 
 ENV['TEST_VAGRANT_VERSION'] ||= 'v1.7.4'
 
-# Using the :plugins group causes Vagrant to automagially load auto_network
-# during acceptance tests.
+# Wrapping gemspec in the :plugins group causes Vagrant 1.5 and newer to
+# automagically load this plugin during acceptance tests.
 group :plugins do
   gemspec
+end
+
+group :development do
+  gem 'yard', '~> 0.8.7'
+  gem 'redcarpet'
 end
 
 group :test do
