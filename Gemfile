@@ -1,6 +1,8 @@
 source 'https://rubygems.org'
+require 'rubygems/version'
 
-ENV['TEST_VAGRANT_VERSION'] ||= 'v1.8.1'
+vagrant_branch = ENV['TEST_VAGRANT_VERSION'] || 'v1.9.8'
+vagrant_version = nil
 
 # Wrapping gemspec in the :plugins group causes Vagrant 1.5 and newer to
 # automagically load this plugin during acceptance tests.
@@ -14,14 +16,25 @@ group :development do
 end
 
 group :test do
-  if ENV['TEST_VAGRANT_VERSION'] == 'HEAD'
-    gem 'vagrant', :github => 'mitchellh/vagrant', :branch => 'master'
+  case vagrant_branch
+  when /head/i
+    gem 'vagrant', :git => 'https://github.com/hashicorp/vagrant.git',
+      :branch => 'master'
   else
-    gem 'vagrant', :github => 'mitchellh/vagrant', :tag => ENV['TEST_VAGRANT_VERSION']
+    vagrant_version = Gem::Version.new(vagrant_branch.sub(/^v/, ''))
+    gem 'vagrant', :git => 'https://github.com/hashicorp/vagrant.git',
+      :tag => vagrant_branch
   end
 
-  # Pinned on 12/10/2014. Compatible with Vagrant 1.5.x, 1.6.x and 1.7.x.
-  gem 'vagrant-spec', :github => 'mitchellh/vagrant-spec', :ref => '1df5a3a'
+  if vagrant_branch.match(/head/i) || (vagrant_version > Gem::Version.new('1.9.3'))
+    # Pinned on 4/11/2017. Compatible with Vagrant > 1.9.3.
+    gem 'vagrant-spec', :git => 'https://github.com/hashicorp/vagrant-spec.git',
+      :ref => '1d09951'
+  elsif vagrant_version
+    # Pinned on 12/10/2014. Compatible with Vagrant 1.6.x -- 1.9.3.
+    gem 'vagrant-spec', :git => 'https://github.com/hashicorp/vagrant-spec.git',
+      :ref => '1df5a3a'
+  end
 end
 
 eval_gemfile "#{__FILE__}.local" if File.exists? "#{__FILE__}.local"
