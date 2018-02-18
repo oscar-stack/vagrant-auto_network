@@ -1,6 +1,12 @@
 ---
 en:
   vagrant_auto_network:
+    action:
+      version_check:
+        deprecated_vagrant_version: |-
+          The vagrant-hosts plugin has deprecated support for Vagrant
+          versions older than %{minimum_version}. Support for version %{vagrant_version}
+          will be removed in the next major release of the plugin.
     pool_exhausted: |-
       The machine '%{name}' tried to get an automatic network address, but all
       ip addresses in the network range '%{network}' have been used. This is

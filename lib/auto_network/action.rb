@@ -4,5 +4,6 @@ module AutoNetwork
     require 'auto_network/action/filter_networks'
     require 'auto_network/action/release'
     require 'auto_network/action/request'
+    require 'auto_network/action/version_check'
   end
 end

@@ -32,5 +32,10 @@ module AutoNetwork
 
       hook.append(AutoNetwork::Action::Release)
     end
+
+    # Internal action hooks
+    action_hook('Vagrant AutoNetwork: vagrant version check', :environment_load) do |hook|
+      hook.prepend(::AutoNetwork::Action::VersionCheck)
+    end
   end
 end
