@@ -96,11 +96,7 @@ The AutoNetwork pool is currently shared across all Vagrant environments which
 means it is not possible to configure a separate range per-Vagrantfile.
 
 
-Contact
--------
+Contributing
+------------
 
-  * [Source code](https://github.com/adrienthebo/vagrant-auto_network)
-  * [Issue tracker](https://github.com/adrienthebo/vagrant-auto_network/issues)
-
-If you have questions or concerns about this module, contact finch on Freenode,
-or email adrien@puppetlabs.com.
+Bug reports and pull requests are welcome on GitHub at https://github.com/oscar-stack/vagrant-auto_network.

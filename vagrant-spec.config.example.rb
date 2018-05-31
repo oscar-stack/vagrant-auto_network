@@ -22,7 +22,7 @@ Vagrant::Spec::Acceptance.configure do |c|
     }
 
   # VMware Fusion disabled by default. Instructions:
-  #   https://github.com/adrienthebo/vagrant-auto_network/wiki#vmware-fusion
+  #   https://github.com/oscar-stack/vagrant-auto_network/wiki#vmware-fusion
 
   #c.provider 'vmware_fusion',
   #  box: (acceptance_dir + 'artifacts' + 'vmware_fusion.box').to_s,

@@ -9,7 +9,7 @@ Gem::Specification.new do |gem|
 
   gem.authors  = ['Adrien Thebo', 'Charlie Sharpsteen']
   gem.email    = ['adrien@somethingsinistral.net', 'source@sharpsteen.net']
-  gem.homepage = 'https://github.com/adrienthebo/vagrant-auto_network'
+  gem.homepage = 'https://github.com/oscar-stack/vagrant-auto_network'
 
   gem.summary     = "Automatically create an internal network for all vagrant boxes"
 
