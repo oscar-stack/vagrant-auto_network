@@ -20,27 +20,33 @@ for each successive request so that network configuration is entirely hands off.
 It's much lighter than running a DNS server and masks the underlying work of
 manually assigning addresses.
 
-Usage
------
-
-    Vagrant.configure('2') do |config|
-      config.vm.define 'first' do |node|
-        node.vm.box = "centos-5-i386"
-
-        node.vm.network :private_network, :auto_network => true
-      end
-
-      config.vm.define 'second' do |node|
-        node.vm.box = "centos-5-i386"
-
-        node.vm.network :private_network, :auto_network => true
-      end
-    end
 
 Installation
 ------------
 
-    vagrant plugin install vagrant-auto_network
+```bash
+vagrant plugin install vagrant-auto_network
+```
+
+Usage
+-----
+
+```ruby
+Vagrant.configure('2') do |config|
+  config.vm.define 'first' do |node|
+    node.vm.box = 'centos/7'
+
+    node.vm.network :private_network, :auto_network => true
+  end
+
+  config.vm.define 'second' do |node|
+    node.vm.box = 'centos/7'
+
+    node.vm.network :private_network, :auto_network => true
+  end
+end
+```
+
 
 Caveats
 -------
