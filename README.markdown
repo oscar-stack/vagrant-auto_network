@@ -48,6 +48,29 @@ end
 ```
 
 
+Troubleshooting
+---------------
+
+On occasion, the state file AutoNetwork uses to store allocated IP addresses
+can become corrupted resulting in errors similar to:
+
+```
+/opt/vagrant/embedded/lib/ruby/2.0.0/psych.rb:205:in `parse': (<unknown>): could not find expected ':' while scanning a simple key at line 288 column 7 (Psych::SyntaxError)
+    from /opt/vagrant/embedded/lib/ruby/2.0.0/psych.rb:205:in `parse_stream'
+    from /opt/vagrant/embedded/lib/ruby/2.0.0/psych.rb:153:in `parse'
+    from /opt/vagrant/embedded/lib/ruby/2.0.0/psych.rb:129:in `load'
+    from /opt/vagrant/embedded/lib/ruby/2.0.0/yaml/store.rb:61:in `load'
+    from ~/.vagrant.d/gems/gems/vagrant-auto_network-1.0.2/lib/auto_network/pool_storage.rb:73:in `load'
+```
+
+This can be fixed by clearing the state file:
+
+    rm ~/.vagrant.d/auto_network/pool.yaml
+
+The `vagrant reload` command should be run on any VMs using AutoNetwork IPs
+in order to re-issue new IP addresses.
+
+
 Caveats
 -------
 

@@ -26,7 +26,10 @@ module AutoNetwork
     def initialize(path)
       # Ensure newly created files start with a skeleton data structure.
       AutoNetwork::PoolStorage.init(path) unless File.file?(path)
-      @pool_storage = AutoNetwork::PoolStorage.new(path)
+      # Enable thread safety an atomic file updates on the underlying
+      # YAML::Store instance.
+      @pool_storage = AutoNetwork::PoolStorage.new(path, true)
+      @pool_storage.ultra_safe = true
     end
 
     # Looks up the pool associated with the provider for a given machine and
