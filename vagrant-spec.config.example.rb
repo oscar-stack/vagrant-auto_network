@@ -1,8 +1,15 @@
+$LOAD_PATH.unshift File.expand_path('lib', __dir__)
+
+# Prevent tests from attempting to load plugins from a Vagrant install
+# that may exist on the host system. We load required plugins below.
+ENV['VAGRANT_DISABLE_PLUGIN_INIT'] = '1'
+
 require 'pathname'
 require 'vagrant-spec/acceptance'
+require 'vagrant-auto_network'
 
 Vagrant::Spec::Acceptance.configure do |c|
-  acceptance_dir = Pathname.new File.expand_path('../acceptance', __FILE__)
+  acceptance_dir = Pathname.new File.expand_path('acceptance', __dir__)
 
   c.component_paths = [acceptance_dir.to_s]
   c.skeleton_paths = [(acceptance_dir + 'skeletons').to_s]
