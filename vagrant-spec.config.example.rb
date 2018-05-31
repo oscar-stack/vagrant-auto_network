@@ -15,7 +15,7 @@ Vagrant::Spec::Acceptance.configure do |c|
   c.skeleton_paths = [(acceptance_dir + 'skeletons').to_s]
 
   c.provider 'virtualbox',
-    box: (acceptance_dir + 'artifacts' + 'virtualbox.box').to_s,
+    box: (acceptance_dir + 'artifacts' + 'centos-virtualbox.box').to_s,
     env_vars: {
       'VBOX_USER_HOME' => '{{homedir}}',
       'AUTO_NETWORK_TEST_RANGE' => '10.42.1.0/24',
