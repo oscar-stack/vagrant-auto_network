@@ -26,12 +26,12 @@ group :test do
       :tag => vagrant_branch
   end
 
-  if vagrant_branch.match(/head/i) || (vagrant_version > Gem::Version.new('1.9.3'))
-    # Pinned on 4/11/2017. Compatible with Vagrant > 1.9.3.
+  if vagrant_branch.match(/head/i) || (vagrant_version >= Gem::Version.new('1.9'))
+    # Pinned on 5/11/2018. Compatible with Vagrant > 1.9. Brings in Rspec 3.
     gem 'vagrant-spec', :git => 'https://github.com/hashicorp/vagrant-spec.git',
-      :ref => '1d09951'
+      :ref => '9413ab2'
   elsif vagrant_version
-    # Pinned on 12/10/2014. Compatible with Vagrant 1.6.x -- 1.9.3.
+    # Pinned on 12/10/2014. Compatible with Vagrant 1.6.x -- 1.8.7.
     gem 'vagrant-spec', :git => 'https://github.com/hashicorp/vagrant-spec.git',
       :ref => '1df5a3a'
   end

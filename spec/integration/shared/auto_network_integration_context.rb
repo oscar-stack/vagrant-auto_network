@@ -30,7 +30,7 @@ shared_context 'auto_network integration' do
     allow(AutoNetwork).to receive(:pool_manager=) do |pool_manager|
       settings.pool_manager = pool_manager
     end
-    allow(AutoNetwork).to receive(:pool_manager).and_return { settings.pool_manager }
+    allow(AutoNetwork).to receive(:pool_manager) { settings.pool_manager }
   end
 
   # Configure each testing environment to include an AutoNetwork pool file and
