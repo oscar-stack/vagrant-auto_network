@@ -45,11 +45,27 @@ Installation
 Caveats
 -------
 
-The default pool range has been hardcoded as '10.20.1.2/24', pending the
-ability to query the host virtual network adapters for their configuration.
-To change this, add the following _before_ the Vagrant configuration block:
+The default pool range has been hardcoded as '10.20.1.2/24' and is assigned
+to the first VM provider, usually VirtualBox. New pools are created for other
+providers by incrementing the second octet to create a new '/24'.
+To change the starting range, add the following to a Vagrantfile _before_ the
+Vagrant configuration block:
 
     AutoNetwork.default_pool = '172.16.0.0/24'
+
+A '/24' should always be used as the default pool in order for multiple
+providers to be supported correctly. If VMs that use `auto_network` assigned IP
+addresses have already been created, then the AutoNetwork pool file will have
+to be cleared:
+
+    ~/.vagrant.d/auto_network/pool.yaml
+
+Running `vagrant reload` on existing VMs will assign new IP addresses from the
+newly configured IP range.
+
+The AutoNetwork pool is currently shared across all Vagrant environments which
+means it is not possible to configure a separate range per-Vagrantfile.
+
 
 Contact
 -------
