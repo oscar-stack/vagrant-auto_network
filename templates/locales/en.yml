@@ -4,7 +4,7 @@ en:
     action:
       version_check:
         deprecated_vagrant_version: |-
-          The vagrant-hosts plugin has deprecated support for Vagrant
+          The vagrant-auto_network plugin has deprecated support for Vagrant
           versions older than %{minimum_version}. Support for version %{vagrant_version}
           will be removed in the next major release of the plugin.
     pool_exhausted: |-
